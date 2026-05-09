@@ -1,0 +1,37 @@
+<div class="results-wrapper fade-in">
+  <div class="results-card card">
+    <div class="results-title">race finished</div>
+
+    <div class="podium" *ngFor="let p of players; let i = index">
+      <div
+        class="rank-badge"
+        [class.rank-1]="p.position === 1"
+        [class.rank-2]="p.position === 2"
+      >
+        {{ p.position === 1 ? '🥇' : '🥈' }}
+      </div>
+      <div class="avatar" [class.you]="p.isYou" [class.opp]="!p.isYou">
+        {{ p.initials }}
+      </div>
+      <div class="result-info">
+        <div class="result-name">
+          {{ p.username }}
+          <span class="you-tag" *ngIf="p.isYou">you</span>
+        </div>
+        <div class="result-sub">finished in {{ p.finishedAt }}</div>
+      </div>
+      <div class="result-wpm">
+        <div class="wpm-num">{{ p.wpm }}</div>
+        <div class="wpm-label">wpm</div>
+      </div>
+      <div class="result-acc">{{ p.accuracy }}%</div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn-primary" (click)="playAgain.emit()">
+        play again →
+      </button>
+      <button class="btn-ghost" routerLink="/leaderboard">leaderboard</button>
+    </div>
+  </div>
+</div>

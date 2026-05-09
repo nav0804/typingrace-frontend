@@ -1,0 +1,68 @@
+<div class="page fade-in">
+  
+    <!-- Modern Angular @switch for clean state management -->
+    @switch (status) {
+      
+      @case ('WAITING') {
+        <div class="flex items-center justify-center h-64">
+          <div class="text-xl text-slate-400 animate-pulse">Waiting for opponent to join...</div>
+        </div>
+      }
+  
+      @case ('COUNTDOWN') {
+        <app-countdown [count]="countdown"></app-countdown>
+      }
+  
+      @case ('IN_PROGRESS') {
+        <div class="race-header flex justify-between items-center mb-6">
+          <div class="room-info text-slate-400">
+            room&nbsp;<span class="mono text-race-primary">{{ roomCode }}</span>
+          </div>
+          <span class="badge badge-live flex items-center gap-2 text-race-error animate-pulse"> 
+            <span class="w-2 h-2 rounded-full bg-race-error"></span> LIVE 
+          </span>
+          <div class="timer mono text-xl">{{ elapsedFormatted }}</div>
+        </div>
+  
+        <div class="card progress-section flex flex-col gap-4 mb-6">
+          @for (p of players; track p.userId) {
+            <app-progress-bar [player]="p"></app-progress-bar>
+          }
+        </div>
+  
+        <!-- Typing area + live stats -->
+        <div class="card typing-section bg-race-surface p-6 rounded-lg shadow-lg">
+          <div class="live-stats flex justify-between mb-6 pb-4 border-b border-slate-700">
+            <div class="stat-card">
+              <div class="stat-label text-slate-500 text-sm">wpm</div>
+              <div class="stat-value text-3xl font-mono text-race-primary">{{ currentWpm }}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label text-slate-500 text-sm">accuracy</div>
+              <!-- The | number pipe works here because we imported CommonModule in the TS file -->
+              <div class="stat-value text-3xl font-mono">{{ currentAccuracy | number:'1.0-0' }}%</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label text-slate-500 text-sm">errors</div>
+              <div class="stat-value text-3xl font-mono text-race-error">{{ errorCount }}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label text-slate-500 text-sm">words</div>
+              <div class="stat-value text-3xl font-mono">{{ wordsTyped }}/{{ textWords.length }}</div>
+            </div>
+          </div>
+  
+          <app-typing-area [text]="textSnapshot" (progress)="onProgress($event)">
+          </app-typing-area>
+        </div>
+      }
+  
+      @case ('FINISHED') {
+        <app-results
+          [players]="finishedPlayers"
+          (playAgain)="onPlayAgain()">
+        </app-results>
+      }
+    }
+  
+  </div>

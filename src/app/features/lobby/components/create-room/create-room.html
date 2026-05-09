@@ -1,0 +1,30 @@
+<div class="card panel">
+  <h2 class="panel-title">create room</h2>
+  <p class="panel-sub">get a code, share it with your opponent</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="field">
+      <label class="label">word pack</label>
+      <select class="select-field" formControlName="wordPackId">
+        <option *ngFor="let p of wordPacks" [value]="p.id">
+          {{ p.label }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="label">word count</label>
+      <div class="radio-group">
+        <label class="radio-opt" *ngFor="let n of [25, 50, 100]">
+          <input type="radio" formControlName="wordCount" [value]="n" />
+          <span>{{ n }}</span>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn-primary full-w" type="submit" [disabled]="loading">
+      <span *ngIf="!loading">create room →</span>
+      <span *ngIf="loading">creating...</span>
+    </button>
+  </form>
+</div>

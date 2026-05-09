@@ -1,0 +1,25 @@
+<div class="player-row">
+  <div class="avatar" [class.you]="player.isYou" [class.opp]="!player.isYou">
+    {{ player.initials }}
+  </div>
+  <div class="player-body">
+    <div class="player-meta">
+      <span class="name">
+        {{ player.username }}
+        <span class="you-tag" *ngIf="player.isYou">you</span>
+      </span>
+      <span class="wpm-tag">
+        {{ player.wpm }} wpm · {{ player.accuracy }}%
+      </span>
+    </div>
+    <div class="progress-track">
+      <div
+        class="progress-fill"
+        [class.you]="player.isYou"
+        [class.opp]="!player.isYou"
+        [style.width.%]="player.progress"
+      ></div>
+    </div>
+  </div>
+  <span class="pct">{{ player.progress }}%</span>
+</div>

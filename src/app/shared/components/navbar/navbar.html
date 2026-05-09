@@ -1,0 +1,24 @@
+<nav class="navbar">
+  <a routerLink="/lobby" class="logo">
+    typing<span class="accent">race</span>
+  </a>
+
+  <div class="nav-links">
+    <!-- Removed onclick and kept only routerLink for clean navigation -->
+    <a
+      routerLink="/lobby"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+    >
+      lobby
+    </a>
+
+    <a routerLink="/leaderboard" routerLinkActive="active"> leaderboard </a>
+  </div>
+
+  <div class="nav-right">
+    <!-- We can eventually dynamicize this with the name "Navneet" from your profile -->
+    <span class="username">alex_dev</span>
+    <div class="avatar">AD</div>
+  </div>
+</nav>

@@ -1,0 +1,52 @@
+.typing-wrapper {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-md);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: text;
+    position: relative;
+    transition: border-color 0.15s;
+  
+    &:focus-within { border-color: var(--accent); }
+  }
+  
+  .text-display {
+    font-family: var(--mono);
+    font-size: 18px;
+    line-height: 2;
+    color: var(--text-3);
+    word-break: break-word;
+    min-height: 80px;
+    user-select: none;
+  }
+  
+  .char {
+    transition: color 0.05s;
+  
+    &.correct { color: var(--text-2); }
+    &.wrong   { color: var(--red); background: rgba(202,71,84,0.15); border-radius: 2px; }
+    &.pending { color: var(--text-3); }
+    &.current {
+      color: var(--text-1);
+      border-left: 2px solid var(--accent);
+      animation: blink 1s step-end infinite;
+      margin-left: -1px;
+    }
+  }
+  
+  .hidden-input {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  
+  .input-hint {
+    font-size: 11px;
+    color: var(--text-3);
+    text-align: center;
+    margin-top: 8px;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+  }

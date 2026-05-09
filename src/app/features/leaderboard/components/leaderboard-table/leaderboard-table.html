@@ -1,0 +1,43 @@
+<table class="lb-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>player</th>
+      <th>best wpm</th>
+      <th>avg wpm</th>
+      <th>races</th>
+      <th>win rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let e of entries"
+      [class.you-row]="e.isYou"
+      [class.top-row]="e.rank <= 3"
+    >
+      <td class="rank-cell">
+        <span
+          class="rank-num"
+          [class.gold]="e.rank === 1"
+          [class.silver]="e.rank === 2"
+          [class.bronze]="e.rank === 3"
+        >
+          {{ e.rank }}
+        </span>
+      </td>
+
+      <td class="player-cell">
+        <div class="avatar" [class.you]="e.isYou" [class.opp]="!e.isYou">
+          {{ e.initials }}
+        </div>
+        <span class="uname">{{ e.username }}</span>
+        <span class="you-tag" *ngIf="e.isYou">you</span>
+      </td>
+
+      <td class="mono bold accent-cell">{{ e.bestWpm }}</td>
+      <td class="mono">{{ e.avgWpm }}</td>
+      <td class="mono muted">{{ e.totalRaces }}</td>
+      <td class="mono green-cell">{{ e.winRate }}%</td>
+    </tr>
+  </tbody>
+</table>

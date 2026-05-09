@@ -1,0 +1,65 @@
+<div class="page fade-in flex items-center justify-center">
+  <div class="card w-full max-w-md">
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-semibold tracking-tight text-white mb-2">
+        join_the_race
+      </h2>
+      <p class="text-sm text-[var(--text-2)]">create your racer profile</p>
+    </div>
+
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onRegister()"
+      class="space-y-6"
+    >
+      <div>
+        <label class="label">username</label>
+        <input
+          formControlName="username"
+          type="text"
+          placeholder="racer_one"
+          class="input-field"
+        />
+      </div>
+
+      <div>
+        <label class="label">email address</label>
+        <input
+          formControlName="email"
+          type="email"
+          placeholder="name@domain.com"
+          class="input-field"
+        />
+      </div>
+
+      <div>
+        <label class="label">password</label>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="••••••••"
+          class="input-field"
+        />
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="registerForm.invalid"
+        class="btn-primary w-full"
+      >
+        create_account
+      </button>
+    </form>
+
+    <div class="divider"></div>
+
+    <p class="text-center text-sm text-[var(--text-2)]">
+      already a racer?
+      <a
+        routerLink="/auth/login"
+        class="text-[var(--accent)] hover:underline ml-1"
+        >sign_in_here</a
+      >
+    </p>
+  </div>
+</div>

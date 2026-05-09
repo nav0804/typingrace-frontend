@@ -1,0 +1,36 @@
+.panel { height: 100%; }
+.panel-title { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+.panel-sub   { font-size: 13px; color: var(--text-2); margin-bottom: 24px; }
+.field       { margin-bottom: 20px; }
+.full-w      { width: 100%; }
+
+.radio-group {
+  display: flex;
+  gap: 8px;
+
+  .radio-opt {
+    flex: 1;
+    cursor: pointer;
+
+    input[type="radio"] { display: none; }
+
+    span {
+      display: block;
+      text-align: center;
+      padding: 8px;
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius);
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: all 0.15s;
+    }
+
+    input:checked + span {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(226,183,20,0.08);
+    }
+  }
+}

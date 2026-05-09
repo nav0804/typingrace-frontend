@@ -1,0 +1,31 @@
+.race-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--text-2);
+  
+    .room-info { flex: 1; }
+    .mono { font-family: var(--mono); color: var(--text-1); font-weight: 500; }
+    .timer { font-family: var(--mono); font-size: 15px; color: var(--text-1); min-width: 48px; text-align: right; }
+  }
+  
+  .progress-section {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .typing-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .live-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
