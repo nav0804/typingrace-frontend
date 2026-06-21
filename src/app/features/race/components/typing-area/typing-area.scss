@@ -23,13 +23,16 @@
   .char {
     transition: color 0.05s;
   
-    &.correct { color: var(--text-2); }
+    /* Changed from var(--text-2) to var(--green) */
+    &.correct { color: var(--green); } 
+    
     &.wrong   { color: var(--red); background: rgba(202,71,84,0.15); border-radius: 2px; }
     &.pending { color: var(--text-3); }
+    
     &.current {
       color: var(--text-1);
       border-left: 2px solid var(--accent);
-      animation: blink 1s step-end infinite;
+      /* Removed the blinking animation here */
       margin-left: -1px;
     }
   }

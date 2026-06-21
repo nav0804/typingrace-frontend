@@ -1,0 +1,59 @@
+<div
+  class="page fade-in flex flex-col items-center pt-16 min-h-[calc(100vh-80px)]"
+>
+  <div class="w-full max-w-4xl flex flex-col items-center text-center mb-16">
+    <div class="badge badge-host mb-6">welcome back, racer</div>
+
+    <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
+      choose your <span class="text-[var(--accent)]">track.</span>
+    </h1>
+
+    <p
+      class="text-lg text-[var(--text-2)] mb-10 font-mono max-w-2xl leading-relaxed"
+    >
+      warm up in solo mode, challenge your friends in private lobbies, or check
+      your standing on the global leaderboards.
+    </p>
+
+    <div class="flex gap-4">
+      <button routerLink="/start-typing" class="btn-primary">
+        enter_solo_mode →
+      </button>
+      <button routerLink="/lobby" class="btn-ghost">multiplayer_lobby</button>
+    </div>
+  </div>
+
+  <div class="divider w-full max-w-5xl opacity-50 mb-16"></div>
+
+  <div class="features-grid">
+    <a routerLink="/start-typing" class="card feature-link hover-yellow">
+      <h3 class="text-[var(--accent)] font-mono font-bold text-lg mb-3">
+        01. warm_up
+      </h3>
+      <p class="text-sm text-[var(--text-2)] leading-relaxed">
+        30-second zero-latency practice arena. track your wpm and accuracy
+        instantly.
+      </p>
+    </a>
+
+    <a routerLink="/lobby" class="card feature-link hover-green">
+      <h3 class="text-[var(--green)] font-mono font-bold text-lg mb-3">
+        02. race_friends
+      </h3>
+      <p class="text-sm text-[var(--text-2)] leading-relaxed">
+        create private rooms. invite your friends with an 8-character code and
+        race in real-time.
+      </p>
+    </a>
+
+    <a routerLink="/leaderboard" class="card feature-link hover-white">
+      <h3 class="text-[var(--text-1)] font-mono font-bold text-lg mb-3">
+        03. standings
+      </h3>
+      <p class="text-sm text-[var(--text-2)] leading-relaxed">
+        every keystroke is calculated. climb the global leaderboard and prove
+        you are the fastest.
+      </p>
+    </a>
+  </div>
+</div>

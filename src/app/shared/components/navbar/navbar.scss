@@ -1,67 +1,276 @@
 .navbar {
-    display: flex;
-    align-items: center;
-    height: 56px;
-    padding: 0 24px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .logo {
-    font-family: var(--mono);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-1);
-    letter-spacing: -0.03em;
-    margin-right: 32px;
-  
-    .accent { color: var(--accent); }
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 4px;
-    flex: 1;
-  
-    a {
-      padding: 6px 12px;
-      font-size: 13px;
-      color: var(--text-2);
-      border-radius: var(--radius);
-      transition: color 0.15s, background 0.15s;
-      font-weight: 500;
-  
-      &:hover { color: var(--text-1); background: var(--bg-hover); }
-      &.active { color: var(--text-1); background: var(--bg-hover); }
-    }
-  }
-  
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .username {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 24px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.03em;
+  margin-right: 32px;
+
+  .accent { color: var(--accent); }
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+
+  a {
+    padding: 6px 12px;
     font-size: 13px;
     color: var(--text-2);
-    font-family: var(--mono);
+    border-radius: var(--radius);
+    transition: color 0.15s, background 0.15s;
+    font-weight: 500;
+
+    &:hover { color: var(--text-1); background: var(--bg-hover); }
+    &.active { color: var(--text-1); background: var(--bg-hover); }
   }
-  
-  .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(226,183,20,0.15);
-    border: 1px solid rgba(226,183,20,0.25);
-    color: var(--accent);
+}
+
+/* ==========================================================================
+   ADDED: Responsive Hamburger Menu Trigger Assets
+   ========================================================================== */
+.hamburger-menu {
+  display: none; /* Hidden on desktop viewports */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20px;
+  height: 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 110;
+  margin-left: auto; /* Pushes toggle cleanly against the user profile controls */
+  margin-right: 16px;
+
+  .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-2);
+    border-radius: 2px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Smooth dynamic CSS morph into an "X" close icon when drawer is open */
+  &.open {
+    .bar:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+      background-color: var(--text-1);
+    }
+    .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .bar:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+      background-color: var(--text-1);
+    }
+  }
+}
+
+.nav-right {
+  position: relative; 
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+
+  .online-status {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    font-family: var(--mono);
+    gap: 8px;
+    padding: 4px 10px;
+    margin-right: 8px;
+    background: rgba(34, 197, 94, 0.05); /* Subtle green tint */
+    border: 1px solid rgba(34, 197, 94, 0.15);
+    border-radius: 20px;
+    user-select: none;
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+      animation: pulse-green 2s infinite;
+    }
+
+    .count {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
   }
+  .profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    user-select: none;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .profile-dropdown {
+    position: absolute;
+    top: calc(100% + 8px); 
+    right: 0;
+    width: 180px;
+    background-color: #121214; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    overflow: hidden;
+    animation: fadeIn 0.15s ease-out;
+
+    .dropdown-header {
+      padding: 12px;
+      
+      .name-label {
+        font-weight: 500;
+        color: #ffffff;
+      }
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dropdown-item {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-2);
+      font-size: 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+
+      &.logout-action:hover {
+        background-color: rgba(244, 63, 94, 0.1); 
+        color: #f43f5e; 
+      }
+    }
+  }
+}
+
+.username {
+  font-size: 13px;
+  color: var(--text-2);
+  font-family: var(--mono);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(226,183,20,0.15);
+  border: 1px solid rgba(226,183,20,0.25);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--mono);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  70% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* ==========================================================================
+   ADDED: Mobile Breakpoint Rules (Collapses targets below 768px width limits)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 12px; 
+  }
+  .hamburger-menu {
+    display: flex; /* Exposes the three-line layout system button */
+    margin-left: 0; /* Just a safety check to ensure it sits flush */
+  }
+
+  .nav-links {
+    display: none; /* Shrinks the inline dashboard row out of view */
+    flex-direction: column;
+    position: absolute;
+    top: 56px; /* Positions perfectly flush with the bottom border of the navbar */
+    left: 0;
+    width: 100%;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    gap: 8px;
+    z-index: 95;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+
+    /* Toggled by Angular logic to drop links into a stacked layout card */
+    &.mobile-open {
+      display: flex;
+      animation: dropdownSlide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    a {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+  }
+
+  .nav-right {
+    .username {
+      display: none; /* Drops name text strings to keep mobile widths space efficient */
+    }
+    
+    .profile-trigger {
+      padding: 4px; /* Trims bounding margins for easier mobile touch spacing */
+    }
+    .online-status {
+      gap: 6px;
+      padding: 4px 8px;
+      
+      /* Hide the word 'online' using a text-indent/overflow trick, 
+         or by hiding a child span if you wrap 'online' in one. 
+         For simplicity, we'll just tighten the styling. */
+      .count {
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+@keyframes dropdownSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

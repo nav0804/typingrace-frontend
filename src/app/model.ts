@@ -122,7 +122,12 @@ export interface ProgressUpdateRequest {
 }
 
 export interface ApiResponse<T> {
-  success: boolean;
-  data: T;
   message?: string;
+  error: boolean;
+  data: T;
+}
+
+export interface JwtResponse {
+  token: string;
+  type: string; // "Bearer"
 }

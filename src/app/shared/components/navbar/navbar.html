@@ -1,24 +1,101 @@
 <nav class="navbar">
-  <a routerLink="/lobby" class="logo">
-    typing<span class="accent">race</span>
+  <!-- Hamburger Menu Button (Visible only on mobile screen viewports) -->
+  <button
+    *ngIf="!router.url.includes('/auth')"
+    class="hamburger-menu"
+    (click)="toggleMobileMenu($event)"
+    [class.open]="isMobileMenuOpen"
+    aria-label="Toggle navigation"
+  >
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+  <a
+    [routerLink]="router.url.includes('/auth') ? '/auth/login' : '/home'"
+    class="logo text-lg font-bold"
+  >
+    typing<span class="accent text-[var(--accent)]">race</span>
   </a>
 
-  <div class="nav-links">
-    <!-- Removed onclick and kept only routerLink for clean navigation -->
+  <!-- Navigation Links Layout Wrapper -->
+  <div
+    class="nav-links"
+    *ngIf="!router.url.includes('/auth')"
+    [class.mobile-open]="isMobileMenuOpen"
+  >
     <a
-      routerLink="/lobby"
+      routerLink="/start-typing"
       routerLinkActive="active"
-      [routerLinkActiveOptions]="{exact: true}"
+      (click)="closeMobileMenu()"
+      >start-typing</a
     >
-      lobby
-    </a>
-
-    <a routerLink="/leaderboard" routerLinkActive="active"> leaderboard </a>
+    <a routerLink="/lobby" routerLinkActive="active" (click)="closeMobileMenu()"
+      >lobby</a
+    >
+    <a
+      routerLink="/leaderboard"
+      routerLinkActive="active"
+      (click)="closeMobileMenu()"
+      >leaderboard</a
+    >
   </div>
 
-  <div class="nav-right">
-    <!-- We can eventually dynamicize this with the name "Navneet" from your profile -->
-    <span class="username">alex_dev</span>
-    <div class="avatar">AD</div>
+  <!-- User profile dropdown actions -->
+  <div class="nav-right" *ngIf="!router.url.includes('/auth')">
+    <div class="online-status">
+      <span class="pulse-dot"></span>
+      <span class="count"
+        >{{ (websocketService.onlineCount$ | async) || 0 }} online</span
+      >
+    </div>
+    <div class="profile-trigger" (click)="toggleDropdown($event)">
+      <span class="username">alex_dev</span>
+      <div class="avatar">AD</div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        class="w-4 h-4 text-[var(--text-2)] transition-transform duration-200"
+        [class.rotate-180]="isDropdownOpen"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </div>
+
+    <!-- Dropdown menu panel context -->
+    <div
+      class="profile-dropdown"
+      *ngIf="isDropdownOpen"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="dropdown-header">
+        <p class="name-label">Alex Dev</p>
+        <p class="role-sub text-xs text-[var(--text-2)]">Racer Profile</p>
+      </div>
+      <div class="dropdown-divider"></div>
+
+      <button (click)="onLogout()" class="dropdown-item logout-action">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-4 h-4"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+          />
+        </svg>
+        <span>sign_out</span>
+      </button>
+    </div>
   </div>
 </nav>

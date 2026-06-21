@@ -46,7 +46,7 @@ input, select, textarea { font-family: var(--mono); }
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: 20px;
 }
 
 .btn-primary {
@@ -94,12 +94,11 @@ input, select, textarea { font-family: var(--mono); }
 
 .input-field {
   width: 100%;
-  padding: 10px 14px;
-  background: var(--bg-surface);
+  padding: 8px 12px; /* Smaller vertical padding */
+  font-size: 13px;    /* Slightly smaller font */  background: var(--bg-surface);
   color: var(--text-1);
   border: 1px solid var(--border-md);
   border-radius: var(--radius);
-  font-size: 14px;
   font-family: var(--mono);
   transition: border-color 0.15s;
   outline: none;

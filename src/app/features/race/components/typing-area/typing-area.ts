@@ -1,127 +1,102 @@
 import {
   Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
-  OnInit,
-  OnChanges,
-  ElementRef,
   ViewChild,
+  ElementRef,
   AfterViewInit,
 } from '@angular/core';
-
-// Update this in your .ts file
-export type CharState = 'correct' | 'wrong' | 'current' | 'pending';
-
-export interface CharModel {
-  char: string;
-  state: CharState;
-}
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-typing-area',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './typing-area.html',
-  styleUrls: ['./typing-area.scss'],
+  styleUrls: ['./typing-area.scss'], // Make sure your CSS is in here!
 })
-export class TypingAreaComponent implements OnInit, OnChanges, AfterViewInit {
-  @Input() text = '';
+export class TypingAreaComponent implements AfterViewInit {
+  @Input() text: string = '';
   @Output() progress = new EventEmitter<{
     wordsTyped: number;
     accuracy: number;
     errorCount: number;
   }>();
 
-  @ViewChild('inputRef') inputRef!: ElementRef<HTMLInputElement>;
+  // Grabs the hidden input from the HTML
+  @ViewChild('hiddenInputRef') hiddenInput!: ElementRef<HTMLInputElement>;
 
-  chars: CharModel[] = [];
-  currentInput = '';
-  currentWordIdx = 0;
-  errorCount = 0;
-  totalTyped = 0;
+  userInput: string = '';
+  errorCount: number = 0;
 
-  private words: string[] = [];
-
-  ngOnInit(): void {
-    this.buildChars();
-  }
-  ngOnChanges(): void {
-    this.buildChars();
+  ngAfterViewInit() {
+    // Automatically focus the input as soon as the Solo Mode page loads
+    setTimeout(() => this.focusInput(), 0);
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => this.inputRef?.nativeElement.focus(), 50);
+  // Forces the browser's cursor into our invisible input
+  focusInput() {
+    this.hiddenInput.nativeElement.focus();
   }
 
-  private buildChars(): void {
-    this.chars = [];
-    this.words = this.text.split(' ');
+  // Handles standard typing, backspaces, and mobile keyboards seamlessly
+  onInputChange(event: any) {
+    const newVal = event.target.value;
 
-    this.words.forEach((word, wi) => {
-      [...word].forEach((ch, ci) => {
-        this.chars.push({
-          char: ch,
-          state: wi === 0 && ci === 0 ? 'current' : 'pending',
-        });
-      });
-      if (wi < this.words.length - 1) {
-        this.chars.push({ char: ' ', state: wi === 0 ? 'current' : 'pending' });
+    // Prevent typing beyond the maximum text length
+    if (newVal.length > this.text.length) {
+      event.target.value = this.userInput; // Revert
+      return;
+    }
+
+    // Check if the newly added letter was a mistake
+    if (newVal.length > this.userInput.length) {
+      const lastCharIdx = newVal.length - 1;
+      if (newVal[lastCharIdx] !== this.text[lastCharIdx]) {
+        this.errorCount++;
       }
-    });
+    }
+
+    this.userInput = newVal;
+    this.emitProgress();
   }
 
-  onInput(event: Event): void {
-    const input = (event.target as HTMLInputElement).value;
-    const lastChar = input[input.length - 1];
-
-    if (!lastChar) return;
-    (event.target as HTMLInputElement).value = '';
-
-    // Find the current position (first 'current' or first 'pending')
-    const curIdx = this.chars.findIndex((c) => c.state === 'current');
-    if (curIdx === -1) return;
-
-    const expected = this.chars[curIdx].char;
-    this.totalTyped++;
-
-    if (lastChar === expected) {
-      this.chars[curIdx].state = 'correct';
-    } else {
-      this.chars[curIdx].state = 'wrong';
-      this.errorCount++;
+  // Maps the current index to your specific CSS classes
+  getClass(index: number): string {
+    // 1. The letter they are currently supposed to type (Blinking Caret)
+    if (index === this.userInput.length) {
+      return 'current';
     }
 
-    // Advance cursor
-    if (curIdx + 1 < this.chars.length) {
-      this.chars[curIdx + 1].state = 'current';
+    // 2. Letters they haven't reached yet
+    if (index > this.userInput.length) {
+      return 'pending';
     }
 
-    // Count completed words (after a space or last word)
-    const completedChars = this.chars.filter(
-      (c) => c.state === 'correct' || c.state === 'wrong'
-    ).length;
-    let wordsTyped = 0;
-    let idx = 0;
-    for (const word of this.words) {
-      const wordLen = word.length;
-      const wordChars = this.chars.slice(idx, idx + wordLen);
-      const done = wordChars.every(
-        (c) => c.state === 'correct' || c.state === 'wrong'
-      );
-      if (done) wordsTyped++;
-      idx += wordLen + 1; // +1 for space
+    // 3. Letters they typed correctly
+    if (this.userInput[index] === this.text[index]) {
+      return 'correct';
     }
 
+    // 4. Letters they messed up
+    return 'wrong';
+  }
+
+  private emitProgress() {
+    const wordsTyped = this.userInput.split(' ').length;
     const accuracy =
-      this.totalTyped > 0
-        ? Math.round(
-            ((this.totalTyped - this.errorCount) / this.totalTyped) * 100
+      this.userInput.length > 0
+        ? Math.max(
+            0,
+            Math.round(
+              ((this.userInput.length - this.errorCount) /
+                this.userInput.length) *
+                100
+            )
           )
         : 100;
 
     this.progress.emit({ wordsTyped, accuracy, errorCount: this.errorCount });
-  }
-
-  trackByIdx(i: number): number {
-    return i;
   }
 }

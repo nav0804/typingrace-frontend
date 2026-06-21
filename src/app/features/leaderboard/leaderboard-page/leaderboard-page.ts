@@ -47,7 +47,6 @@ export class LeaderboardPageComponent implements OnInit {
   constructor(private mock: MockDataService) {}
 
   ngOnInit(): void {
-    // Note: ensure this method exists in your mock service
     this.entries = this.mock.getLeaderboard_sync();
   }
 }

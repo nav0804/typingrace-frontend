@@ -1,0 +1,33 @@
+/* src/app/features/home/components/landing-page/landing-page.scss */
+
+.features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding-bottom: 48px;
+  
+    /* Switch to a 3-column row on medium/large screens */
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+  
+  .feature-link {
+    /* This is the critical fix: forces the link to behave like a physical box */
+    display: block; 
+    flex: 1;
+    text-decoration: none;
+    transition: border-color 0.3s ease;
+  
+    &:hover h3 {
+      text-decoration: underline;
+    }
+  
+    /* Custom hover borders based on the feature */
+    &.hover-yellow:hover { border-color: var(--accent); }
+    &.hover-green:hover { border-color: var(--green); }
+    &.hover-white:hover { border-color: var(--text-1); }
+  }

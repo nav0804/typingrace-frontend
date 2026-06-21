@@ -1,0 +1,96 @@
+<div class="page fade-in">
+  <div class="max-w-3xl mx-auto py-12">
+    <!-- Header Section -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold tracking-tight">warm_up_session</h1>
+      <div class="badge badge-waiting">solo mode</div>
+    </div>
+
+    @if (status === 'IN_PROGRESS') {
+
+    <!-- Live Stats Dashboard -->
+    <div class="flex gap-4 mb-6">
+      <!-- NEW: Time Card -->
+      <div class="stat-card flex-1">
+        <div class="stat-label">time</div>
+        <!-- Text turns accent color when 10 seconds or less remain -->
+        <div
+          class="stat-value"
+          [style.color]="timeLeft <= 10 ? 'var(--accent)' : 'inherit'"
+        >
+          {{ timeLeft }}s
+        </div>
+      </div>
+
+      <div class="stat-card accent flex-1">
+        <div class="stat-label">speed</div>
+        <div class="stat-value">
+          {{ currentWpm }}
+          <span class="text-xs text-[var(--text-3)] font-sans">wpm</span>
+        </div>
+      </div>
+
+      <div class="stat-card green flex-1">
+        <div class="stat-label">accuracy</div>
+        <div class="stat-value">{{ currentAccuracy }}%</div>
+      </div>
+
+      <div class="stat-card red flex-1">
+        <div class="stat-label">errors</div>
+        <div class="stat-value">{{ errorCount }}</div>
+      </div>
+    </div>
+
+    <!-- The Typing Area -->
+    <app-typing-area [text]="textToType" (progress)="handleProgress($event)">
+    </app-typing-area>
+    } @if (status === 'FINISHED') {
+    <div class="card fade-in">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold tracking-tight text-[var(--accent)] mb-2">
+          session_complete
+        </h2>
+        <p class="text-sm text-[var(--text-2)] uppercase tracking-widest">
+          final statistics
+        </p>
+      </div>
+
+      <div class="flex gap-4 mb-8">
+        <div class="stat-card accent flex-1 text-center py-6">
+          <div class="stat-label">speed</div>
+          <div class="text-5xl font-bold font-mono text-[var(--text-1)]">
+            {{ currentWpm }}
+            <span class="text-lg text-[var(--text-3)] font-sans">wpm</span>
+          </div>
+        </div>
+
+        <div class="stat-card green flex-1 text-center py-6">
+          <div class="stat-label">accuracy</div>
+          <div class="text-5xl font-bold font-mono text-[var(--text-1)]">
+            {{ currentAccuracy }}%
+          </div>
+        </div>
+
+        <div class="stat-card red flex-1 text-center py-6">
+          <div class="stat-label">errors</div>
+          <div class="text-5xl font-bold font-mono text-[var(--text-1)]">
+            {{ errorCount }}
+          </div>
+        </div>
+      </div>
+
+      <div class="divider my-8"></div>
+
+      <div class="flex gap-4 justify-center">
+        <button (click)="resetSession()" class="btn-ghost">⟳ play_again</button>
+        <button (click)="router.navigate(['/lobby'])" class="btn-primary">
+          join_multiplayer
+        </button>
+        <button (click)="router.navigate(['/leaderboard'])" class="btn-ghost">
+          view_leaderboard
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</div>

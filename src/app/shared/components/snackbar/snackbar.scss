@@ -1,0 +1,59 @@
+.snackbar-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 300px;
+    max-width: 450px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    background-color: #121214; // Matches your dark race theme HUD card base
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    border-left: 4px solid transparent;
+    animation: slideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  
+    // Synchronized theme context flags
+    &.success {
+      border-left-color: #10b981; // Emerald Track Green
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.05) 0%, #121214 100%);
+    }
+    &.error {
+      border-left-color: #f43f5e; // Rose Warning Red
+      background: linear-gradient(90deg, rgba(244, 63, 94, 0.05) 0%, #121214 100%);
+    }
+    &.info {
+      border-left-color: var(--accent); // Your branding theme configuration variant
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, #121214 100%);
+    }
+  
+    .snackbar-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }

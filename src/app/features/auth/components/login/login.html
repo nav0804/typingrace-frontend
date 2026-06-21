@@ -1,19 +1,23 @@
-<div class="page fade-in flex items-center justify-center">
-  <div class="card w-full max-w-md">
+<!-- Main container that takes up the remaining screen height -->
+<div class="flex h-[calc(100vh-70px)] w-full items-center justify-center p-4">
+  <!-- Centered Card with fixed max-width -->
+  <div class="card w-full max-w-[420px] fade-in shadow-2xl">
     <div class="text-center mb-8">
-      <h2 class="text-2xl font-semibold tracking-tight text-white mb-2">
+      <h2 class="text-2xl font-bold tracking-tight text-white mb-2">
         welcome_back
       </h2>
-      <p class="text-sm text-[var(--text-2)]">sign in to start racing</p>
+      <p class="text-xs text-[var(--text-2)] uppercase tracking-[0.2em]">
+        ready to race?
+      </p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-6">
       <div>
-        <label class="label">email address</label>
+        <label class="label">username</label>
         <input
-          formControlName="email"
-          type="email"
-          placeholder="name@domain.com"
+          formControlName="username"
+          type="username"
+          placeholder="demoUser"
           class="input-field"
         />
       </div>
@@ -31,13 +35,13 @@
       <button
         type="submit"
         [disabled]="loginForm.invalid"
-        class="btn-primary w-full"
+        class="btn-primary w-full py-3"
       >
         login_to_account
       </button>
     </form>
 
-    <div class="divider"></div>
+    <div class="divider my-8"></div>
 
     <p class="text-center text-sm text-[var(--text-2)]">
       new to the track?

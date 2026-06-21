@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SoloModeComponent } from './features/race/components/solo-mode/solo-mode';
+import { LandingPageComponent } from './features/home/components/landing-page/landing-page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -7,6 +9,10 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('./features/auth/auth-module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'home',
+    component: LandingPageComponent, // Make sure to import this at the top!
   },
   {
     path: 'lobby',
@@ -24,6 +30,10 @@ const routes: Routes = [
       import('./features/leaderboard/leaderboard-module').then(
         (m) => m.LeaderboardModule
       ),
+  },
+  {
+    path: 'start-typing',
+    component: SoloModeComponent,
   },
   { path: '**', redirectTo: 'auth' },
 ];
