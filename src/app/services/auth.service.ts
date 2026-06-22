@@ -6,6 +6,7 @@ import { ApiResponse, JwtResponse } from '../model';
 import { jwtDecode } from 'jwt-decode';
 import { WebsocketService } from '../core/services/websocket.service';
 import { Token } from '@angular/compiler';
+import { environment } from '../../environments/environments.prod';
 
 export interface ProfileData {
   id: string;
@@ -31,7 +32,7 @@ export interface CustomJwtPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/api/';
+  private baseUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
